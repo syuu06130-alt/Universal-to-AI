@@ -1,8 +1,25 @@
 -- Infinity Universal Hub - 100+ Features
 -- Rayfield UI Implementation - Complete Version
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source.lua'))()
+-- エラーハンドリング付き読み込み
+local success, Rayfield = pcall(function()
+    return loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source.lua'))()
+end)
 
+if not success or not Rayfield then
+    warn("Rayfield UIの読み込みに失敗しました")
+    warn("エラー: " .. tostring(Rayfield))
+    
+    -- 代替UI表示
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "エラー";
+        Text = "UI読み込み失敗。ネットワーク接続を確認してください";
+        Duration = 10;
+    })
+    return
+end
+
+-- 以降のコード...
 local Window = Rayfield:CreateWindow({
     Name = "⚡ Infinity Universal Hub | 100+ Features",
     LoadingTitle = "Loading Infinity Hub...",
